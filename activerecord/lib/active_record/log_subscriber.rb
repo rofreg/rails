@@ -133,15 +133,15 @@ module ActiveRecord
       end
 
       def log_query_source
-        source = extract_query_source_location(caller)
+        sources = extract_query_source_locations(caller)
 
-        if source
+        sources.each do |source|
           logger.debug("  ↳ #{source}")
         end
       end
 
-      def extract_query_source_location(locations)
-        backtrace_cleaner.clean(locations.lazy).first
+      def extract_query_source_locations(locations)
+        backtrace_cleaner.clean(locations.lazy).first(ActiveRecord.verbose_query_logs_stack_depth)
       end
 
       def filter(name, value)

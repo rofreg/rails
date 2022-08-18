@@ -204,13 +204,29 @@ class LogSubscriberTest < ActiveRecord::TestCase
     ActiveRecord.verbose_query_logs = true
 
     logger = TestDebugLogSubscriber.new
-    def logger.extract_query_source_location(*); nil; end
+    def logger.extract_query_source_locations(*); []; end
 
     logger.sql(Event.new(0, sql: "hi mom!"))
     assert_equal 1, @logger.logged(:debug).size
     assert_no_match(/↳/, @logger.logged(:debug).last)
   ensure
     ActiveRecord.verbose_query_logs = false
+  end
+
+  def test_verbose_query_logs_stack_depth
+    ActiveRecord.verbose_query_logs = true
+    ActiveRecord.verbose_query_logs_stack_depth = 2
+
+    logger = TestDebugLogSubscriber.new
+    logger.sql(Event.new(0, sql: "hi mom!"))
+
+    assert_equal 3, @logger.logged(:debug).size
+    @logger.logged(:debug).last(2).each do |log_line|
+      assert_match(/↳/, log_line)
+    end
+  ensure
+    ActiveRecord.verbose_query_logs = false
+    ActiveRecord.verbose_query_logs_stack_depth = 1
   end
 
   def test_verbose_query_logs_disabled_by_default

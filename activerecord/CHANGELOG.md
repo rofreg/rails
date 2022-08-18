@@ -1,3 +1,14 @@
+*   Log database query callers to a configurable stack depth
+
+    Add `verbose_query_logs_stack_depth` configuration option to display the caller
+    of database queries with flexible stack depth. When debugging, this can help you
+    distinguish between multiple invocations of the same query or method, so that you
+    can more easily locate all of its callsites.
+
+    `verbose_query_logs` must already be enabled to have any effect.
+
+    *Ryan Laughlin*
+
 *   Fix `ActiveRecord::QueryMethods#in_order_of` to include `nil`s, to match the
     behavior of `Enumerable#in_order_of`.
 

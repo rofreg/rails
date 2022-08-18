@@ -302,7 +302,7 @@ module ActiveRecord
       end
 
       %w(
-        reading_role writing_role default_timezone index_nested_attribute_errors
+        reading_role writing_role default_timezone index_nested_attribute_errors verbose_query_logs_stack_depth
         verbose_query_logs queues warn_on_records_fetched_greater_than maintain_test_schema
         application_record_class action_on_strict_loading_violation schema_format error_on_ignored_order
         timestamped_migrations dump_schema_after_migration dump_schemas suppress_multiple_database_warning

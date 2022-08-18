@@ -1741,6 +1741,12 @@ module ApplicationTests
       assert_not ActiveRecord.verbose_query_logs
     end
 
+    test "config.active_record.verbose_query_logs_stack_depth is 1 by default in development" do
+      app "development"
+
+      assert_equal ActiveRecord.verbose_query_logs_stack_depth, 1
+    end
+
     test "config.active_record.suppress_multiple_database_warning is false by default in development" do
       app "development"
       assert_not ActiveRecord.suppress_multiple_database_warning

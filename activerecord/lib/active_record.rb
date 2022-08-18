@@ -259,6 +259,14 @@ module ActiveRecord
   ##
   # :singleton-method:
   #
+  # Specifies the depth of the stack trace that should be logged by the
+  # `verbose_query_logs` setting. Defaults to 1.
+  singleton_class.attr_accessor :verbose_query_logs_stack_depth
+  self.verbose_query_logs_stack_depth = 1
+
+  ##
+  # :singleton-method:
+  #
   # Specifies the names of the queues used by background jobs.
   singleton_class.attr_accessor :queues
   self.queues = {}
